@@ -42,7 +42,9 @@ trait TransitionAwareTrait
      */
     protected function _setTransition($transition)
     {
-        $this->transition = $this->_normalizeStringable($transition);
+        $this->transition = ($transition === null)
+            ? null
+            : $this->_normalizeStringable($transition);
     }
 
     /**
