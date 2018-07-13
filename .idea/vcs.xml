@@ -2,5 +2,9 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vendor/dhii/data-state-interface" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vendor/symfony/debug" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vendor/symfony/filesystem" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vendor/symfony/stopwatch" vcs="Git" />
   </component>
 </project>
