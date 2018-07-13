@@ -78,6 +78,27 @@ class TransitionAwareTraitTest extends TestCase
     }
 
     /**
+     * Tests the getter and setter methods to ensure whether null is accepted.
+     *
+     * @since [*next-version*]
+     */
+    public function testGetSetTransitionNull()
+    {
+        $subject = $this->createInstance();
+        $reflect = $this->reflect($subject);
+        $input   = null;
+
+        $subject->expects($this->never())
+                ->method('_normalizeStringable')
+                ->with(null)
+                ->willThrowException(new InvalidArgumentException());
+
+        $reflect->_setTransition($input);
+
+        $this->assertNull($reflect->_getTransition(), 'Retrieved value is not null.');
+    }
+
+    /**
      * Tests the getter and setter methods with an invalid value to assert whether an exception is thrown.
      *
      * @since [*next-version*]
