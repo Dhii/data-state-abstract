@@ -18,7 +18,7 @@ trait StateAwareAwareTrait
      *
      * @since [*next-version*]
      *
-     * @var StateAwareInterface
+     * @var StateAwareInterface|null
      */
     protected $stateAware;
 
@@ -27,7 +27,7 @@ trait StateAwareAwareTrait
      *
      * @since [*next-version*]
      *
-     * @return StateAwareInterface The state-aware subject instance.
+     * @return StateAwareInterface|null The state-aware subject instance.
      */
     protected function _getStateAware()
     {
@@ -39,7 +39,7 @@ trait StateAwareAwareTrait
      *
      * @since [*next-version*]
      *
-     * @param StateAwareInterface $stateAware The state-aware subject instance.
+     * @param StateAwareInterface|null $stateAware The state-aware subject instance.
      */
     protected function _setStateAware($stateAware)
     {
