@@ -38,7 +38,7 @@ class TransitionCapableStateMachineTraitTest extends TestCase
                          array_merge(
                              [
                                  '_normalizeTransition',
-                                 '_getStateMachineFor',
+                                 '_getStateMachineForTransition',
                                  '_getNewSubject',
                                  '_throwTransitionerException',
                                  '_throwCouldNotTransitionException',
@@ -209,7 +209,7 @@ class TransitionCapableStateMachineTraitTest extends TestCase
         // Create a mock state machine and expect the subject to return it
         $stateMachine = $this->createStateMachine();
         $subject->expects($this->once())
-                ->method('_getStateMachineFor')
+                ->method('_getStateMachineForTransition')
                 ->with($stateAware, $transition)
                 ->willReturn($stateMachine);
 
@@ -256,7 +256,7 @@ class TransitionCapableStateMachineTraitTest extends TestCase
         // Create a mock state machine and expect the subject to return it
         $stateMachine = $this->createStateMachine();
         $subject->expects($this->once())
-                ->method('_getStateMachineFor')
+                ->method('_getStateMachineForTransition')
                 ->with($stateAware, $transition)
                 ->willReturn($stateMachine);
 
@@ -295,7 +295,7 @@ class TransitionCapableStateMachineTraitTest extends TestCase
         // Mock and expect the state machine getter to return a state machine
         // when given the argument subject and normalized transition.
         $subject->expects($this->once())
-                ->method('_getStateMachineFor')
+                ->method('_getStateMachineForTransition')
                 ->with($stateAware, $transition)
                 ->willReturn(null);
 
@@ -320,7 +320,7 @@ class TransitionCapableStateMachineTraitTest extends TestCase
         // Create a mock state machine and expect the subject to return it
         $stateMachine = $this->createStateMachine();
         $subject->expects($this->once())
-                ->method('_getStateMachineFor')
+                ->method('_getStateMachineForTransition')
                 ->with($stateAware, $transition)
                 ->willReturn($stateMachine);
 
@@ -367,7 +367,7 @@ class TransitionCapableStateMachineTraitTest extends TestCase
         // Create a mock state machine and expect the subject to return it
         $stateMachine = $this->createStateMachine();
         $subject->expects($this->once())
-                ->method('_getStateMachineFor')
+                ->method('_getStateMachineForTransition')
                 ->with($stateAware, $transition)
                 ->willReturn($stateMachine);
 
