@@ -31,7 +31,7 @@ trait TransitionCapableStateMachineTrait
     protected function _transition(StateAwareInterface $subject, $transition)
     {
         // Retrieve the state machine to use
-        $stateMachine = $this->_getStateMachine($subject, $transition);
+        $stateMachine = $this->_getStateMachineFor($subject, $transition);
         // Ensure it is not null
         if ($stateMachine === null) {
             throw $this->_createTransitionerException($this->__('State machine is null'));
@@ -85,7 +85,7 @@ trait TransitionCapableStateMachineTrait
      *
      * @return StateMachineInterface|null The state machine.
      */
-    abstract protected function _getStateMachine(StateAwareInterface $subject, $transition);
+    abstract protected function _getStateMachineFor(StateAwareInterface $subject, $transition);
 
     /**
      * Retrieves the new subject instance.
