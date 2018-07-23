@@ -40,8 +40,8 @@ class TransitionCapableStateMachineTraitTest extends TestCase
                                  '_normalizeTransition',
                                  '_getStateMachineFor',
                                  '_getNewSubject',
-                                 '_createTransitionerException',
-                                 '_createCouldNotTransitionException',
+                                 '_throwTransitionerException',
+                                 '_throwCouldNotTransitionException',
                                  '__',
                              ],
                              $methods
@@ -50,14 +50,14 @@ class TransitionCapableStateMachineTraitTest extends TestCase
                      ->getMockForTrait();
 
         $mock->method('__')->willReturnArgument(0);
-        $mock->method('_createTransitionerException')->willReturnCallback(
+        $mock->method('_throwTransitionerException')->willReturnCallback(
             function ($message = '', $code = 0, $prev = null) {
-                return new Exception($message, $code, $prev);
+                throw new Exception($message, $code, $prev);
             }
         );
-        $mock->method('_createCouldNotTransitionException')->willReturnCallback(
-            function ($message = '', $code = 0, $prev = null) {
-                return new Exception($message, $code, $prev);
+        $mock->method('_throwCouldNotTransitionException')->willReturnCallback(
+            function ($message = '', $code = 0, $prev = null, $subject = null, $transition = null) {
+                throw new Exception($message, $code, $prev);
             }
         );
 

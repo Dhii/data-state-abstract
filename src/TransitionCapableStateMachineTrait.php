@@ -34,7 +34,7 @@ trait TransitionCapableStateMachineTrait
         $stateMachine = $this->_getStateMachineFor($subject, $transition);
         // Ensure it is not null
         if ($stateMachine === null) {
-            throw $this->_createTransitionerException($this->__('State machine is null'));
+            throw $this->_throwTransitionerException($this->__('State machine is null'));
         }
 
         // Normalize the transition before using it in the state machine
@@ -44,17 +44,21 @@ trait TransitionCapableStateMachineTrait
             // Attempt to transition using the state machine
             $rStateMachine = $stateMachine->transition($nTransition);
         } catch (SmCouldNotTransitionExceptionInterface $smtException) {
-            throw $this->_createCouldNotTransitionException(
-                $this->__('Failed to apply "%1$s" transition', [$transition]), null, $smtException, null, $subject
+            throw $this->_throwCouldNotTransitionException(
+                $this->__('Failed to apply "%1$s" transition', [$transition]),
+                null,
+                $smtException,
+                $subject,
+                $transition
             );
         } catch (StateMachineExceptionInterface $smException) {
-            throw $this->_createTransitionerException(
+            throw $this->_throwTransitionerException(
                 $this->__('An error occurred during transition'), null, $smException
             );
         }
 
         if (!($rStateMachine instanceof ReadableStateMachineInterface)) {
-            throw $this->_createTransitionerException(
+            throw $this->_throwTransitionerException(
                 $this->__('Resulting state machine is not readable')
             );
         }
@@ -112,15 +116,13 @@ trait TransitionCapableStateMachineTrait
      * @param string|Stringable|null     $message      The error message, if any.
      * @param int|null                   $code         The error code, if any.
      * @param RootException|null         $previous     The previous exception for chaining, if any.
-     * @param TransitionerInterface|null $transitioner The transitioner that erred, if any.
      *
-     * @return TransitionerExceptionInterface The created transitioner exception instance.
+     * @throws TransitionerExceptionInterface The created transitioner exception instance.
      */
-    abstract protected function _createTransitionerException(
+    abstract protected function _throwTransitionerException(
         $message = null,
         $code = null,
-        RootException $previous = null,
-        $transitioner = null
+        RootException $previous = null
     );
 
     /**
@@ -131,17 +133,15 @@ trait TransitionCapableStateMachineTrait
      * @param string|Stringable|null     $message      The error message, if any.
      * @param int|null                   $code         The error code, if any.
      * @param RootException|null         $previous     The previous exception for chaining, if any.
-     * @param TransitionerInterface|null $transitioner The transitioner that erred, if any.
      * @param StateAwareInterface|null   $subject      The transition subject, if any.
      * @param string|Stringable|null     $transition   The transitioner that failed, if any.
      *
-     * @return CouldNotTransitionExceptionInterface The created transition exception instance.
+     * @throws CouldNotTransitionExceptionInterface The created transition exception instance.
      */
-    abstract protected function _createCouldNotTransitionException(
+    abstract protected function _throwCouldNotTransitionException(
         $message = null,
         $code = null,
         RootException $previous = null,
-        $transitioner = null,
         $subject = null,
         $transition = null
     );
