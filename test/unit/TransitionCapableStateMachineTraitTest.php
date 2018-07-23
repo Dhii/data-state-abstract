@@ -38,10 +38,10 @@ class TransitionCapableStateMachineTraitTest extends TestCase
                          array_merge(
                              [
                                  '_normalizeTransition',
-                                 '_getStateMachine',
+                                 '_getStateMachineForTransition',
                                  '_getNewSubject',
-                                 '_createTransitionerException',
-                                 '_createCouldNotTransitionException',
+                                 '_throwTransitionerException',
+                                 '_throwCouldNotTransitionException',
                                  '__',
                              ],
                              $methods
@@ -50,14 +50,14 @@ class TransitionCapableStateMachineTraitTest extends TestCase
                      ->getMockForTrait();
 
         $mock->method('__')->willReturnArgument(0);
-        $mock->method('_createTransitionerException')->willReturnCallback(
+        $mock->method('_throwTransitionerException')->willReturnCallback(
             function ($message = '', $code = 0, $prev = null) {
-                return new Exception($message, $code, $prev);
+                throw new Exception($message, $code, $prev);
             }
         );
-        $mock->method('_createCouldNotTransitionException')->willReturnCallback(
-            function ($message = '', $code = 0, $prev = null) {
-                return new Exception($message, $code, $prev);
+        $mock->method('_throwCouldNotTransitionException')->willReturnCallback(
+            function ($message = '', $code = 0, $prev = null, $subject = null, $transition = null) {
+                throw new Exception($message, $code, $prev);
             }
         );
 
@@ -209,7 +209,7 @@ class TransitionCapableStateMachineTraitTest extends TestCase
         // Create a mock state machine and expect the subject to return it
         $stateMachine = $this->createStateMachine();
         $subject->expects($this->once())
-                ->method('_getStateMachine')
+                ->method('_getStateMachineForTransition')
                 ->with($stateAware, $transition)
                 ->willReturn($stateMachine);
 
@@ -256,7 +256,7 @@ class TransitionCapableStateMachineTraitTest extends TestCase
         // Create a mock state machine and expect the subject to return it
         $stateMachine = $this->createStateMachine();
         $subject->expects($this->once())
-                ->method('_getStateMachine')
+                ->method('_getStateMachineForTransition')
                 ->with($stateAware, $transition)
                 ->willReturn($stateMachine);
 
@@ -295,7 +295,7 @@ class TransitionCapableStateMachineTraitTest extends TestCase
         // Mock and expect the state machine getter to return a state machine
         // when given the argument subject and normalized transition.
         $subject->expects($this->once())
-                ->method('_getStateMachine')
+                ->method('_getStateMachineForTransition')
                 ->with($stateAware, $transition)
                 ->willReturn(null);
 
@@ -320,7 +320,7 @@ class TransitionCapableStateMachineTraitTest extends TestCase
         // Create a mock state machine and expect the subject to return it
         $stateMachine = $this->createStateMachine();
         $subject->expects($this->once())
-                ->method('_getStateMachine')
+                ->method('_getStateMachineForTransition')
                 ->with($stateAware, $transition)
                 ->willReturn($stateMachine);
 
@@ -367,7 +367,7 @@ class TransitionCapableStateMachineTraitTest extends TestCase
         // Create a mock state machine and expect the subject to return it
         $stateMachine = $this->createStateMachine();
         $subject->expects($this->once())
-                ->method('_getStateMachine')
+                ->method('_getStateMachineForTransition')
                 ->with($stateAware, $transition)
                 ->willReturn($stateMachine);
 
